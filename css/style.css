@@ -10202,6 +10202,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   z-index: 10000000000000; }
 
 #side-bar {
+  font-size:26px;
   background: #132330;
   margin-top: 6vh;
   height: 94vh;
