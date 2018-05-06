@@ -112,9 +112,9 @@ include('php/fetch_notifications.php');
 									Description<span class="req">*</span>
 								</label>
 							<?php if (!$editMode) : ?>
-							<textarea rows="1" name="description" required></textarea>
+							<textarea rows="4" name="description" required></textarea>
 							<?php else : ?>
-							<textarea rows="1" name="description" required><?php echo $storyRow['description']?></textarea>
+							<textarea rows="4" name="description" required><?php echo $storyRow['description']?></textarea>
 							<?php endif; ?>
 						</div>
 
