@@ -10924,7 +10924,7 @@ pre {
 .search-header {
   background-image: url("../img/communifyexterior.jpg");
   background-size: cover;
-  height: 98vh;
+  height: 60vh;
   display: block;
   position: relative;
   width: 100%; }
@@ -10932,7 +10932,7 @@ pre {
     width: 60%;
     position: relative;
     margin: auto;
-    top: 20vh; }
+    top: 15vh; }
   .search-header .search-options .form {
     display: flex;
     width: 482px;
@@ -11014,10 +11014,10 @@ pre {
       opacity: 0; }
 
 .advanced-active span {
-  margin: 0 10px 0 0; }
+  margin: 0 10px 0 -10px; }
   .advanced-active span:after {
     opacity: 1;
-    transform: translateX(5); }
+    transform: translateX(10); }
 
 .post-story-search-link {
   width: 100%;
@@ -11050,7 +11050,6 @@ pre {
   width: 75vw;
   margin: 0 auto;
   transition: .2s height;
-  max-height: 1190px;
   overflow: hidden; }
   @media (max-width: 800px) {
     .search-content .search-wrapper {
@@ -11142,7 +11141,6 @@ pre {
   color: white;
   font-size: 48px;
   position: relative;
-  top: 50vh;
   text-align: center;
   margin: 0 auto;
   cursor: pointer;
@@ -11157,7 +11155,6 @@ pre {
   color: white;
   font-size: 48px;
   position: relative;
-  top: 50vh;
   margin: auto;
   margin: 0 auto;
   cursor: pointer;
@@ -11175,7 +11172,6 @@ html, body {
   height: 100%; }
 
 #main-content, #main-content-front {
-  min-height: 100%;
   margin-bottom: -5vh; }
   #main-content:after, #main-content-front:after {
     content: "";

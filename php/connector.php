@@ -1,9 +1,9 @@
 <?php
 
-DEFINE ('dbUser', 'sharetha_sm'); # will change when hosted
-DEFINE ('dbPass', 'eJ67stNvUMHQ9zI'); # will change when hosted
-DEFINE ('dbHost', '112.140.180.112'); # will change when hosted
-DEFINE ('dbName', 'sharetha_dnt');
+DEFINE ('dbUser', 'root'); # will change when hosted
+DEFINE ('dbPass', '0000'); # will change when hosted
+DEFINE ('dbHost', 'localhost'); # will change when hosted
+DEFINE ('dbName', 'dnt');
 
 
 $conn = mysqli_connect(dbHost, dbUser, dbPass, dbName);
