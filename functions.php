@@ -31,7 +31,7 @@
                 $stmt = $conn->prepare($query);
             }
             else{
-                $stmt = $conn->
+                $stmt = $conn->prepare($query);
             }
             $stmt->execute();            
             $result = $stmt->fetchAll();

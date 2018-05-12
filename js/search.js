@@ -8,7 +8,7 @@ function getCategories(){
         var string = "";
 
         for(var i = 0; i < data.length; i++){
-            string = string + '<button name=' + data[i]["categoryName"] + ' class="btn advanced-options-button" data-type=' + data[i]["categoryName"] + ' value=' + data[i]["categoryID"] + ' onClick="categoryButtonToggle"><span>' + data[i]["categoryName"] + '</span></button>';
+            string = string + '<button name=' + data[i]["categoryName"] + ' class="btn advanced-options-button margin-top-bottom" data-type=' + data[i]["categoryName"] + ' value=' + data[i]["categoryID"] + ' onClick="categoryButtonToggle"><span>' + data[i]["categoryName"] + '</span></button>';
         }
 
         $("#categories").html(string);

@@ -44,6 +44,7 @@ if (!isset($_SESSION['login_user'])) {
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<style>
 		.center-align{text-align:center;}
+		.margin-top-bottom{margin-top:2px; margin-bottom:2px;}
 	</style>
 </head>
 
@@ -93,7 +94,7 @@ if (!isset($_SESSION['login_user'])) {
 							</div>
 						</div>
 						<div class="col-xs-12 center-align">
-							<a class="btn btn-primary btn-lg" href="post-story.php" role="button">Post Story</a>
+							<a class="btn btn-primary btn-lg margin-top-bottom" href="post-story.php" role="button">Post Story</a>
 						</div>
 					</div>
 					<!-- Slogan -->
