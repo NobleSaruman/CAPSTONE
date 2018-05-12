@@ -44,7 +44,7 @@ if (!isset($_SESSION['login_user'])) {
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<style>
 		.center-align{text-align:center;}
-		.margin-top-bottom{margin-top:2px; margin-bottom:2px;}
+		.margin-top-bottom{margin:3px;}
 	</style>
 </head>
 
@@ -64,34 +64,18 @@ if (!isset($_SESSION['login_user'])) {
 				<!-- Search bar -->
 				<div class="search-stories-tool">
 					<div class="search-options">
-						<form class="form" action="search.php" method="GET">
+						<div class="form">
 							<div class="field-wrap">
 								<label>
 				        			Search
 				        		</label>
 								<input class="search-bar" type="text" autocomplete="off" name="search"/>
 				      		</div>
-							<button id="search-button" class="search-button edit-button"><i class="fa fa-search" aria-hidden="true"></i></button>
-						</form>
+							<button id="search-button" class="search-button edit-button" onClick="getResults()"><i class="fa fa-search" aria-hidden="true"></i></button>
+						</div>
 						<!-- Advanced Search -->
-        				<div class="search-advanced">
-							<p class="advance-button" onClick="">Advanced Search</p>							
-							<div class="advanced-search-options">
-								<div id="categories" class="categories">
-									<?php
-
-									$cat = "SELECT * FROM categories";
-									$fetchCats = mysqli_query($conn,$cat);
-
-
-									while($cats = mysqli_fetch_array($fetchCats)) :
-
-									?>
-									<button name="<?php echo $cats['categoryName'] ?>" class="btn advanced-options-button" data-type="<?php echo $cats['categoryName'] ?>" value="<?php echo $cats['categoryID'] ?>"><span><?php echo $cats['categoryName'] ?></span></button>
-
-									<?php endwhile; ?>
-								</div>
-							</div>
+						<div class="row justify-content-md-center">				
+							<div id="categories" class="col-xs-12 col-md-6"></div>
 						</div>
 						<div class="col-xs-12 center-align">
 							<a class="btn btn-primary btn-lg margin-top-bottom" href="post-story.php" role="button">Post Story</a>

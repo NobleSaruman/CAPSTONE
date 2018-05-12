@@ -1,13 +1,25 @@
 <?php
-    $getCategories = "SELECT categoryID, categoryName FROM categories;";
-    $getAllResults = "SELECT s.storyID, s.title, s.description, c.categoryName, s.approved, u.firstName, u.lastName, sc.imageID, sc.audioID FROM stories s INNER JOIN users u ON s.authorID = u.userID INNER JOIN storycontents sc ON s.storyID = sc.storyID LEFT JOIN categories c ON s.categoryID = c.categoryID WHERE s.trash = '0' AND s.draft = '0' ORDER BY s.storyID";
+    class DBQuery {
+        public $query = "";
+        public $params = [];
+        public function __construct($q, $p = []) {
+            $this->params = $p;
+            $this->query = $q;
+        }
+        public function isAllowedParam($param) {return in_array($param, $this->params);}
+    }
 
+//queryHandler(new DBQuery($query, ['date'], $_POST['replacer']), $_POST['params'])
     if(isset($_POST['functionname'])){
         if($_POST['functionname'] == "getresults"){
-            queryHandler($getAllResults, $_POST['options'], 1);
+            $query = "SELECT s.storyID, s.title, s.description, c.categoryName, s.approved, u.firstName, u.lastName, sc.imageID, sc.audioID FROM stories s INNER JOIN users u ON s.authorID = u.userID INNER JOIN storycontents sc ON s.storyID = sc.storyID LEFT JOIN categories c ON s.categoryID = c.categoryID WHERE s.trash = '0' AND s.draft = '0' ORDER BY s.storyID";
+            
+            queryHandler(new DBQuery($query, []), $_POST['params']);
+            
         }
         else if($_POST['functionname'] == "getcategories"){
-            queryHandler($getCategories, 0, 1);
+            $query = "SELECT categoryID, categoryName FROM categories;";
+            queryHandler(new DBQuery($query));
         }
     }
 
@@ -18,7 +30,7 @@
         return new PDO($connString, $dbUser, $dbPass);
     }
 
-    function queryHandler($query, $options = 0, $ajax = 0) {
+    function queryHandler($query, $params = null) {
         try {            
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
@@ -27,24 +39,40 @@
             $conn = GetConn();
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            if($options == 0){
-                $stmt = $conn->prepare($query);
+            $stmt = null;
+
+            if(is_null($params)){
+                $stmt = $conn->prepare($query->query);
             }
             else{
-                $stmt = $conn->prepare($query);
+                $stmt = $conn->prepare($query->query);
+                $json_params = json_decode($params);
+
+                for($i = 0; $i < count($json_params); $i++) {
+                    if(count((array)$json_params[$i]) != 1) {
+                        return "Parameters incorrectly formatted";
+                    }
+                    $param_name = key($json_params[$i]);
+                    $param_value = $json_params[$i]->{key($json_params[$i])};
+
+                    if($query->isAllowedParam($param_name)) {
+                        $stmt->bindParam(':' . $param_name, $param_value);
+                    }
+                    else {
+                        return "This parameter is not allowed";
+                    }
+                }
+            }
+            if(is_null($stmt)) {
+                return "Failed to prepare query";
             }
             $stmt->execute();            
             $result = $stmt->fetchAll();
            
-            if($ajax == 0) {
-                return $result;
-            }
-            else {
-               $json_result["result"] = "success";
-               $json_result["output"] = $result;
-                
-                echo json_encode($json_result);
-            }
+            $json_result["result"] = "success";
+            $json_result["output"] = $result;
+            
+            echo json_encode($json_result);
         }
         catch(PDOException $e) {
             $result['exception'] = $e;

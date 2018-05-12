@@ -10527,17 +10527,6 @@ $('.story-type-button').on('click', function (e) {
   }
 });
 
-$('.advanced-options-button').on('click', function (e) {
-  var type = $(this).data('type');
-  if ($(this).hasClass('advanced-active')) {
-    $(this).removeClass('advanced-active');
-    // $('.story-'+type).removeClass('show');
-  } else {
-    $(this).addClass('advanced-active');
-    // $('.story-'+type).addClass('show');
-  }
-});
-
 $('.advance-button').on('click', function () {
   if ($('.advanced-search-options').hasClass('show')) {
     $('.advanced-search-options').removeClass('show');

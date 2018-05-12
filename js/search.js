@@ -1,6 +1,16 @@
 $(document).ready(function(){
+    getCategories();
     getResults();
 });
+
+$(document).on('click', '.advanced-options-button', function(){
+    var type = $(this).data('type');
+    if ($(this).hasClass('advanced-active')) {
+      $(this).removeClass('advanced-active');
+    } else {
+      $(this).addClass('advanced-active');
+    }
+})
 
 function getCategories(){
     ajaxPost({"functionname":"getcategories"}, function(obj){
@@ -28,8 +38,8 @@ function getResults(){
     $(".advanced-active").each(function(){
         options.push($(this).val());
     })
-
-    ajaxPost({"functionname":"getresults", "options":options}, function(obj){
+    console.log(options);
+    ajaxPost({"functionname":"getresults", "params":JSON.stringify(options)}, function(obj){
         var data = obj.output
         var string = "";
 
