@@ -10955,10 +10955,10 @@ pre {
     border-bottom-left-radius: 10px; }
     @media (max-width: 800px) {
       .search-header .search-options .search-bar {
-        width: 350px; } }
+        width: 100%; } }
     @media (max-width: 400px) {
       .search-header .search-options .search-bar {
-        width: 200px; } }
+        width: 100%; } }
     .search-header .search-options .search-bar:focus {
       opacity: 1;
       transition: opacity .2s; }
