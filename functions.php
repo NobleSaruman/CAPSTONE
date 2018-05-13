@@ -2,9 +2,16 @@
     class DBQuery {
         public $query = "";
         public $params = [];
-        public function __construct($q, $p = []) {
+        public function __construct($q, $p = [], $r = null) {
             $this->params = $p;
-            $this->query = $q;
+            if(!is_null($r)) {$this->query = $this->decodeReplacer($q, $r);}
+            else {$this->query = $q;}
+        }
+        private function decodeReplacer($query, $replacer) {
+            if($replacer == 0){
+                return str_replace("{{replacer}}", "INTERVAL 7 DAY", $query);
+            }
+            return $query;
         }
         public function isAllowedParam($param) {return in_array($param, $this->params);}
     }
