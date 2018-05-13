@@ -8,10 +8,24 @@
             else {$this->query = $q;}
         }
         private function decodeReplacer($query, $replacer) {
-            if($replacer == 0){
-                return str_replace("{{replacer}}", "INTERVAL 7 DAY", $query);
+            $replacer = json_decode($replacer);
+            if(count($replacer) > 0){
+                $categories = queryHandler(new DBQuery("SELECT categoryID, categoryName FROM categories;"), null, 0);
+                $categoryNames = array();
+                for($i = 0; $i < count($categories); $i++){
+                    array_push($categoryNames, $categories[$i]["categoryName"]);
+                }
+                $query = str_replace("{{replacer}}",  "AND ({{replacer}})", $query);
+                for($i = 0; $i < count($replacer); $i++){
+                    if(in_array($replacer[$i], $categoryNames)){
+                        $query = str_replace("{{replacer}}",  "categoryName = '".$replacer[$i]."' {{replacer}}", $query);
+                    }
+                    if($i != count($replacer) - 1){
+                        $query = str_replace("{{replacer}}",  "OR {{replacer}}", $query);
+                    }
+                }
             }
-            return $query;
+            return str_replace("{{replacer}}", "", $query);
         }
         public function isAllowedParam($param) {return in_array($param, $this->params);}
     }
@@ -19,9 +33,8 @@
 //queryHandler(new DBQuery($query, ['date'], $_POST['replacer']), $_POST['params'])
     if(isset($_POST['functionname'])){
         if($_POST['functionname'] == "getresults"){
-            $query = "SELECT s.storyID, s.title, s.description, c.categoryName, s.approved, u.firstName, u.lastName, sc.imageID, sc.audioID FROM stories s INNER JOIN users u ON s.authorID = u.userID INNER JOIN storycontents sc ON s.storyID = sc.storyID LEFT JOIN categories c ON s.categoryID = c.categoryID WHERE s.trash = '0' AND s.draft = '0' ORDER BY s.storyID";
-            
-            queryHandler(new DBQuery($query, []), $_POST['params']);
+            $query = "SELECT s.storyID, s.title, s.description, c.categoryName, s.approved, u.firstName, u.lastName, sc.imageID, sc.audioID FROM stories s INNER JOIN users u ON s.authorID = u.userID INNER JOIN storycontents sc ON s.storyID = sc.storyID LEFT JOIN categories c ON s.categoryID = c.categoryID WHERE s.title LIKE :bind AND s.trash = '0' AND s.draft = '0' {{replacer}} ORDER BY s.storyID";      
+            queryHandler(new DBQuery($query, ['bind'], $_POST['replacer']), $_POST['params']);
             
         }
         else if($_POST['functionname'] == "getcategories"){
@@ -37,7 +50,7 @@
         return new PDO($connString, $dbUser, $dbPass);
     }
 
-    function queryHandler($query, $params = null) {
+    function queryHandler($query, $params = null, $ajax = 1) {
         try {            
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
@@ -63,7 +76,7 @@
                     $param_value = $json_params[$i]->{key($json_params[$i])};
 
                     if($query->isAllowedParam($param_name)) {
-                        $stmt->bindParam(':' . $param_name, $param_value);
+                        $stmt->bindParam($param_name, $param_value);
                     }
                     else {
                         return "This parameter is not allowed";
@@ -75,11 +88,16 @@
             }
             $stmt->execute();            
             $result = $stmt->fetchAll();
-           
-            $json_result["result"] = "success";
-            $json_result["output"] = $result;
+
+            if($ajax == 0){
+                return $result;
+            }
+            else{
+                $json_result["result"] = "success";
+                $json_result["output"] = $result;
             
-            echo json_encode($json_result);
+                echo json_encode($json_result);
+            }
         }
         catch(PDOException $e) {
             $result['exception'] = $e;

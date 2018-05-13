@@ -18,7 +18,7 @@ function getCategories(){
         var string = "";
 
         for(var i = 0; i < data.length; i++){
-            string = string + '<button name=' + data[i]["categoryName"] + ' class="btn advanced-options-button margin-top-bottom" data-type=' + data[i]["categoryName"] + ' value=' + data[i]["categoryID"] + ' onClick="categoryButtonToggle"><span>' + data[i]["categoryName"] + '</span></button>';
+            string = string + '<button name=' + data[i]["categoryName"] + ' class="btn advanced-options-button margin-top-bottom" data-type=' + data[i]["categoryName"] + ' value=' + data[i]["categoryName"] + ' onClick="categoryButtonToggle"><span>' + data[i]["categoryName"] + '</span></button>';
         }
 
         $("#categories").html(string);
@@ -32,16 +32,38 @@ function categoryButtonToggle(){
     }
 }
 
+function removeSpecials(str) {
+    var lower = str.toLowerCase();
+    var upper = str.toUpperCase();
+
+    var res = "";
+    for(var i=0; i<lower.length; ++i) {
+        if(lower[i] != upper[i] || lower[i].trim() === '')
+            res += str[i];
+    }
+    return res;
+}
+
 function getResults(){
     var options = [];
+    var searchText = removeSpecials($("#search-text").val()); 
 
     $(".advanced-active").each(function(){
         options.push($(this).val());
     })
-    console.log(options);
-    ajaxPost({"functionname":"getresults", "params":JSON.stringify(options)}, function(obj){
-        var data = obj.output
+    ajaxPost({"functionname":"getresults", "params":JSON.stringify([{'bind':'%'+searchText+'%'}]), "replacer":JSON.stringify(options)}, function(obj){
+        var data = obj.output;
         var string = "";
+
+        if(data.length == 0){
+            $("#result-message").html("No Story Found! <br> Please Try Other Search Options.");
+        }
+        else if(searchText == "" && options.length == 0){
+            $("#result-message").html("Your Stories, Our Community");
+        }
+        else{
+            $("#result-message").html(data.length + " Stories Found!");
+        }
 
         for(var i = 0; i < data.length; i++){
             var imageURL = "img/cat/story.jpg"

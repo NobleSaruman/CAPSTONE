@@ -36,7 +36,7 @@ if (!isset($_SESSION['login_user'])) {
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title><?php echo $title; ?></title>
 	<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -69,7 +69,7 @@ if (!isset($_SESSION['login_user'])) {
 								<label>
 				        			Search
 				        		</label>
-								<input class="search-bar" type="text" autocomplete="off" name="search"/>
+								<input id="search-text" class="search-bar" type="text" autocomplete="off" name="search"/>
 				      		</div>
 							<button id="search-button" class="search-button edit-button" onClick="getResults()"><i class="fa fa-search" aria-hidden="true"></i></button>
 						</div>
@@ -104,7 +104,7 @@ if (!isset($_SESSION['login_user'])) {
 			<!-- show results -->
 			<div class="search-content" id="search-content-area">
 				<div id="title-search-content">
-					<h1>Our Stories</h1>
+					<h1 id="result-message">Our Stories</h1>
 				</div>
 				<div class="search-wrapper" id="search-result-area";>
 				</div>
@@ -120,6 +120,7 @@ if (!isset($_SESSION['login_user'])) {
   <script src="bundle.js"></script>
   <script src="tools.js"></script>
   <script src="js/search.js"></script>
+
 
 </body>
 </html>

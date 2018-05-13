@@ -11049,7 +11049,7 @@ pre {
 .search-content .search-wrapper {
   display: flex;
   flex-wrap: wrap;
-  width: 50vw;
+  width: 70vw;
   margin: 0 auto;
   transition: .2s height;
   overflow: hidden; }
