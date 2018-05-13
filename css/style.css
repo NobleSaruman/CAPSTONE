@@ -10955,10 +10955,10 @@ pre {
     border-bottom-left-radius: 10px; }
     @media (max-width: 800px) {
       .search-header .search-options .search-bar {
-        width: 100%; } }
+        width: 90%; } }
     @media (max-width: 400px) {
       .search-header .search-options .search-bar {
-        width: 100%; } }
+        width: 90%; } }
     .search-header .search-options .search-bar:focus {
       opacity: 1;
       transition: opacity .2s; }
@@ -10966,13 +10966,15 @@ pre {
       opacity: 1;
       transition: opacity .2s; }
   .search-header .search-options .search-button {
-    width: 4vw;
+    width: 10%;
     border: none;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px; }
     @media (max-width: 800px) {
       .search-header .search-options .search-button {
-        width: 8vw; } }
+        position: relative;
+        left: -10%;
+        width: 10%; } }
   .search-header .search-advanced {
     width: 70%;
     text-align: center;
@@ -11047,13 +11049,13 @@ pre {
 .search-content .search-wrapper {
   display: flex;
   flex-wrap: wrap;
-  width: 75vw;
+  width: 50vw;
   margin: 0 auto;
   transition: .2s height;
   overflow: hidden; }
   @media (max-width: 800px) {
     .search-content .search-wrapper {
-      width: 100vw; } }
+      width: 100%; } }
 
 .search-content .story-tile {
   width: 30%;
@@ -11062,8 +11064,8 @@ pre {
   background: #f7f7f7; }
   @media (max-width: 768px) {
     .search-content .story-tile {
-      width: 45%;
-      margin-right: 4%; } }
+      width: 50vw;
+      margin-left: 25%;} }
   @media (max-width: 400px) {
     .search-content .story-tile {
       width: 100%;
