@@ -33,12 +33,16 @@
 //queryHandler(new DBQuery($query, ['date'], $_POST['replacer']), $_POST['params'])
     if(isset($_POST['functionname'])){
         if($_POST['functionname'] == "getresults"){
-            $query = "SELECT s.storyID, s.title, s.description, c.categoryName, s.approved, u.firstName, u.lastName, sc.imageID, sc.audioID FROM stories s INNER JOIN users u ON s.authorID = u.userID INNER JOIN storycontents sc ON s.storyID = sc.storyID LEFT JOIN categories c ON s.categoryID = c.categoryID WHERE s.title LIKE :bind AND s.trash = '0' AND s.draft = '0' {{replacer}} ORDER BY s.storyID";      
+            $query = "SELECT s.storyID, s.title, s.description, c.categoryName, s.approved, u.firstName, u.lastName, sc.imageID, i.count, sc.audioID FROM stories s INNER JOIN users u ON s.authorID = u.userID INNER JOIN storycontents sc ON s.storyID = sc.storyID LEFT JOIN (SELECT i.storyID, COUNT(*) AS 'count'FROM images i GROUP BY i.storyID) i ON s.storyID = i.storyID LEFT JOIN categories c ON s.categoryID = c.categoryID WHERE s.title LIKE :bind AND s.trash = '0' AND s.draft = '0' {{replacer}} ORDER BY s.storyID DESC";      
             queryHandler(new DBQuery($query, ['bind'], $_POST['replacer']), $_POST['params']);
             
         }
         else if($_POST['functionname'] == "getcategories"){
             $query = "SELECT categoryID, categoryName FROM categories;";
+            queryHandler(new DBQuery($query));
+        }
+        else if($_POST['functionname'] == "getimages"){
+            $query = "SELECT * FROM images;";
             queryHandler(new DBQuery($query));
         }
     }

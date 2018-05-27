@@ -10924,7 +10924,7 @@ pre {
 .search-header {
   background-image: url("../img/communifyexterior.jpg");
   background-size: cover;
-  height: 60vh;
+  height: 50vh;
   display: block;
   position: relative;
   width: 100%; }
@@ -10994,12 +10994,10 @@ pre {
         transition: opacity .2s; }
 
 .advanced-options-button {
+  width: 100%;
   background: #0498e2;
   color: #fff;
   cursor: pointer; }
-  @media (min-width: 700px) {
-    .advanced-options-button {
-      width: 125px; } }
   .advanced-options-button:hover {
     background: #294b67;
     color: #fff; }
